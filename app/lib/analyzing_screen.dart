@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
 import 'result_screen.dart';
 
-class AnalyzingScreen extends StatelessWidget {
+class AnalyzingScreen extends StatefulWidget {
   const AnalyzingScreen({super.key});
+
+  @override
+  State<AnalyzingScreen> createState() => _AnalyzingScreenState();
+}
+
+class _AnalyzingScreenState extends State<AnalyzingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // 3-second timer that automatically moves to the Result Screen
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ResultScreen()),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,33 +30,19 @@ class AnalyzingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const CircularProgressIndicator(
-                color: Color(0xFF1E3A8A),
-                strokeWidth: 5,
-              ),
+                  color: Color(0xFF1E3A8A), strokeWidth: 5),
               const SizedBox(height: 32),
               const Text(
                 'Analyzing opportunity...',
                 style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1E3A8A),
-                ),
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1E3A8A)),
               ),
               const SizedBox(height: 32),
               _buildCheckItem('Checking job description'),
               _buildCheckItem('Detecting suspicious phrases'),
               _buildCheckItem('Calculating risk score'),
-              const SizedBox(height: 48),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ResultScreen()),
-                  );
-                },
-                child: const Text("Skip to Results (For Testing)"),
-              )
             ],
           ),
         ),
